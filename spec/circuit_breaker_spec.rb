@@ -1,4 +1,4 @@
-require_relative '../circuit_breaker'
+require_relative '../circuit_breaker/circuit_breaker'
 
 describe CircuitBreaker do
 
@@ -12,11 +12,11 @@ describe CircuitBreaker do
     end
   end
 
-  let(:success_block) { ->(args){ 'success' } }
-  let(:error_block)   { ->(args){ raise Timeout::Error } }
+  let(:success_block) { ->{ 'success' } }
+  let(:error_block)   { ->{ raise Timeout::Error } }
   let(:spy)           { Spy.new }
-  let(:spy_block)     { ->(args){ spy.called } }
-  let(:spy_with_error_block)     { ->(args){ spy.called; raise Timeout::Error } }
+  let(:spy_block)     { ->{ spy.called } }
+  let(:spy_with_error_block)     { ->{ spy.called; raise Timeout::Error } }
   let(:monitor)       { Monitor.new }
 
   describe '#call' do

@@ -9,14 +9,14 @@ class CircuitBreaker
     @monitor          = nil
   end
 
-  def call args = nil
+  def call(*args)
     returned = false
 
     case state
     when :closed
       while !returned && state == :closed
         begin
-          result = do_call(args)
+          result = do_call(*args)
           returned = true
         rescue StandardError
           record_failure($!)
@@ -31,9 +31,9 @@ class CircuitBreaker
 
   private
 
-  def do_call args
+  def do_call(*args)
     result = Timeout::timeout(@invocation_timeout) do
-      @circuit.call(args)
+      @circuit.call(*args)
     end
 
     reset
