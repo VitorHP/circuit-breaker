@@ -1,4 +1,4 @@
-require_relative '../circuit_breaker/circuit_breaker'
+require_relative '../circuit_breaker'
 
 describe CircuitBreaker do
 
